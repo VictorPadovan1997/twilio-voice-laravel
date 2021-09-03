@@ -1,5 +1,6 @@
 ﻿$(function () {
     var ajaxURL = window.location.protocol+"//"+window.location.hostname+"/"+"twilio-voice-laravel/";
+    console.log(ajaxURL);
 
     var speakerDevices = document.getElementById('speaker-devices');
     var ringtoneDevices = document.getElementById('ringtone-devices');
@@ -11,20 +12,19 @@
     var identity = prompt("Please enter your name", "Jack"); // Geting name of Client
 
     document.getElementById('button-call').onclick = function () {
-    // get the phone number to connect the call to
         var params = {
           To: document.getElementById('phone-number').value,
           outgoing_caller_id : identity
         };
 
-        console.log('Calling ' + params.To + '...');
+        console.log('Ligando para ' + params.To + '...');
         Twilio.Device.connect(params);
+
     };
 
-  
+
     window.onload = function () { // We will get token on load.
-        // get the Client name to connect the call to
-    
+
         if(identity){ // identity is a client name.
             $.ajaxSetup({
                 headers: {
@@ -68,39 +68,34 @@
                     });
 
                     /*Twilio.Device.incoming(function (conn) {
-                        
+
                     });*/
 
                     Twilio.Device.on('incoming', function(conn) {
                         log('Incoming connection from ' + conn.parameters.From);
-                        console.log(conn);
-                        
-                        // i passed custom param and get through loop
+                        atualizaStatusDaChamada(conn.parameters, conn.message, 'Incoming');
                         conn.customParameters.forEach((val,key) => {
-                            if(key == "outgoing_caller_id"){ // calling by. 
-                                // We will show name on Popup :
+                            if(key == "outgoing_caller_id"){
                                 document.getElementById("dialog-confirm").title = "Calling from "+ val;
 
                             }
                         });
 
-
-                        var archEnemyPhoneNumber = '+12099517118';
-                        // console.log();
-                        $( "#dialog-confirm" ).dialog({ //jQuery dialog box
+                        $( "#dialog-confirm" ).dialog({
                             resizable: false,
                             height: "auto",
                             width: 400,
                             modal: true,
                             buttons: {
                                 "Accept": function() {
-                                    // accept the incoming connection and start two-way audio
                                     conn.accept();
                                     $( this ).dialog( "close" );
+                                    atualizaStatusDaChamada(conn.parameters, conn.message, 'Accepted');
                                 },
                                 "Reject": function() {
                                     conn.reject();
                                     $( this ).dialog( "close" );
+                                    atualizaStatusDaChamada(conn.parameters, conn.message, 'Reject');
                                 }
                               }
                         });
@@ -126,9 +121,31 @@
         }
     };
 
+    function atualizaStatusDaChamada(dadosDaChamada, from,  status) {
+        $.ajax({
+            url : ajaxURL+'calls/create',
+            type : "post",
+            dataType : "json",
+            data : {
+                call_sid : dadosDaChamada.CallSid,
+                from_user : from.outgoing_caller_id,
+                to_user	 : dadosDaChamada.To,
+                status : status,
+                duration : '0'
+            },
+            success : function(data){
+                console.log(data);
+            },
+            error : function(err){
+                console.log('Call nao atualizada!');
+            }
+        })
+    }
+
   // Bind button to hangup call
     document.getElementById('button-hangup').onclick = function () {
-        log('Hanging up...');
+        log('Cancelando...');
+
         Twilio.Device.disconnectAll();
     };
 
@@ -141,7 +158,7 @@
         var selectedDevices = [].slice.call(speakerDevices.children)
           .filter(function(node) { return node.selected; })
           .map(function(node) { return node.getAttribute('data-id'); });
-        
+
         Twilio.Device.audio.speakerDevices.set(selectedDevices);
     });
 
@@ -149,7 +166,7 @@
         var selectedDevices = [].slice.call(ringtoneDevices.children)
           .filter(function(node) { return node.selected; })
           .map(function(node) { return node.getAttribute('data-id'); });
-        
+
         Twilio.Device.audio.ringtoneDevices.set(selectedDevices);
     });
 

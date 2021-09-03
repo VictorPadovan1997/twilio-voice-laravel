@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CallController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +16,18 @@ use App\Http\Controllers\Controller;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
+Route::get('/',[CallController::class, 'index']);
+Route::get('/calls',[CallController::class, 'index']);
+Route::post('/calls/create',[CallController::class, 'create']);
+Route::delete('/calls/{id}',[CallController::class, 'destroy']);
+
+//Configuracao Twilio
 Route::get('/index',[Controller::class, 'index']);
-Route::get('/',[Controller::class, 'index']);
+Route::get('/twilio',[Controller::class, 'index']);
 Route::post('/voice',[Controller::class, 'voice']);
 Route::post('/token',[Controller::class, 'token']);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
