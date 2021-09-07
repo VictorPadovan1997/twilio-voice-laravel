@@ -7,13 +7,15 @@
     var outputVolumeBar = document.getElementById('output-volume');
     var inputVolumeBar = document.getElementById('input-volume');
     var volumeIndicators = document.getElementById('volume-indicators');
+    var identity = document.getElementById('nomeUsuarioLogado').value;
+    identity = identity.replace(/\s+/g, '');
 
-    log('Requesting Capability Token...');
-    var identity = prompt("Please enter your name", "Jack"); // Geting name of Client
 
     document.getElementById('button-call').onclick = function () {
+        var phoneNumber =  document.getElementById('phone-number').value;
+        phoneNumber = phoneNumber.replace(/\s+/g, '');
         var params = {
-          To: document.getElementById('phone-number').value,
+          To: phoneNumber,
           outgoing_caller_id : identity
         };
 
@@ -23,9 +25,8 @@
     };
 
 
-    window.onload = function () { // We will get token on load.
-
-        if(identity){ // identity is a client name.
+    window.onload = function () {
+        if (identity){
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -33,7 +34,7 @@
             });
 
             $.ajax({
-                url : ajaxURL+"token", // route
+                url : ajaxURL+"token",
                 type : "post",
                 dataType : "json",
                 data : {
@@ -53,7 +54,9 @@
                     });
 
                     Twilio.Device.connect(function (conn) {
-                        log('Successfully established call!');
+                        console.log('Successfully established call!');
+                        console.log(conn);
+
                         document.getElementById('button-call').style.display = 'none';
                         document.getElementById('button-hangup').style.display = 'inline';
                         volumeIndicators.style.display = 'block';
@@ -61,22 +64,19 @@
                     });
 
                     Twilio.Device.disconnect(function (conn) {
-                        log('Call ended.');
+                        console.log('End!');
+                        console.log(conn);
                         document.getElementById('button-call').style.display = 'inline';
                         document.getElementById('button-hangup').style.display = 'none';
                         volumeIndicators.style.display = 'none';
                     });
-
-                    /*Twilio.Device.incoming(function (conn) {
-
-                    });*/
 
                     Twilio.Device.on('incoming', function(conn) {
                         log('Incoming connection from ' + conn.parameters.From);
                         atualizaStatusDaChamada(conn.parameters, conn.message, 'Incoming');
                         conn.customParameters.forEach((val,key) => {
                             if(key == "outgoing_caller_id"){
-                                document.getElementById("dialog-confirm").title = "Calling from "+ val;
+                                document.getElementById("dialog-confirm").title = val +  ", está ligando... ";
 
                             }
                         });
@@ -89,6 +89,14 @@
                             buttons: {
                                 "Accept": function() {
                                     conn.accept();
+                                    console.log('Aceito');
+                                    console.log(conn);
+                                    outboundCall = device.connect({
+                                        To: identity
+                                    });
+                                    outboundCall.on("accept", (connection) => {
+                                        console.log("The other person answered the phone!");
+                                    });
                                     $( this ).dialog( "close" );
                                     atualizaStatusDaChamada(conn.parameters, conn.message, 'Accepted');
                                 },
@@ -101,10 +109,8 @@
                         });
                     });
 
-                    setClientNameUI(data.identity); //print name
-
+                    setClientNameUI(data.identity);
                     Twilio.Device.audio.on('deviceChange', updateAllDevices);
-
                       // Show audio selection UI if it is supported by the browser.
                     if (Twilio.Device.audio.isSelectionSupported) {
                         document.getElementById('output-selection').style.display = 'block';
@@ -112,6 +118,8 @@
 
                 },
                 error : function(err){
+                    console.log(err);
+
                     alert("err");
                     log('Could not get a token from server!');
                 }
@@ -142,7 +150,6 @@
         })
     }
 
-  // Bind button to hangup call
     document.getElementById('button-hangup').onclick = function () {
         log('Cancelando...');
 
@@ -200,6 +207,10 @@
     }
 });
 
+function setaClientName(nome) {
+   document.getElementById('phone-number').value = nome;
+}
+
 // Update the available ringtone and speaker devices
 function updateDevices(selectEl, selectedDevices) {
     selectEl.innerHTML = '';
@@ -229,6 +240,6 @@ function log(message) {
 // Set the client name in the UI
 function setClientNameUI(clientName) {
     var div = document.getElementById('client-name');
-    div.innerHTML = 'Your client name: <strong>' + clientName +
+    div.innerHTML = 'Identificação: <strong>' + clientName +
     '</strong>';
 }

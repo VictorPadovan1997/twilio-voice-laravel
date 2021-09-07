@@ -13,7 +13,9 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         "voice",
-        '/calls/create'
+        '/calls/create',
+        '/voice',
+        '/token',
     ];
 
 }

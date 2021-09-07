@@ -1,4 +1,4 @@
-@extends('layouts.bootstrap')
+@extends('layouts.dashboard')
 
 @section('title', 'Chamadas')
 

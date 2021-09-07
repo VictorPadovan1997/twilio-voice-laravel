@@ -17,19 +17,13 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function index() {
-
-    	return view("index");
-
-    }
-
     public function token(Request $request) {
-
     	$data = $request->all();
     	$twilioAccountSid = env("TWILIO_ACCOUNT_SID");
 		$twilioApiKey = env("TWILIO_API_KEY");
 		$twilioApiSecret = env("TWILIO_API_SECRET");
 		$outgoingApplicationSid = env("TWILIO_SID");
+
 
 		$identity = $data["identity"]; // Jack // Client name
 		$token = new AccessToken(
@@ -62,8 +56,6 @@ class Controller extends BaseController
             "name" => "outgoing_caller_id",
             "value" => $data["outgoing_caller_id"],
         ]);
-
-
 
 		return $response;
 
