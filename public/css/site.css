@@ -1,13 +1,7 @@
-﻿@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono);
-
-body,
+﻿
 p {
   padding: 0;
   margin: 0;
-}
-
-body {
-  background: #272726;
 }
 
 label {
@@ -128,12 +122,12 @@ div#controls {
 
   div#controls div#log {
     border: 1px solid #686865;
-    width: 35%;
+    /* width: 35%; */
     height: 9.5em;
     margin-top: 2.75em;
     text-align: left;
     padding: 1.5em;
-    float: right;
+    /* float: right; */
     overflow-y: scroll;
   }
 

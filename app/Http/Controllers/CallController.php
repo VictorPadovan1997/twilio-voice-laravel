@@ -6,14 +6,24 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Models\Call;
+use App\Models\User;
+use App\Http\Controllers\Auth;
+use App\Http\Controllers\UsuarioController;
 
 class CallController extends Controller
 {
 
     public function index() {
         $calls = Call::all();
+        $usuariosOnline = $this->buscaUsuarioOnline();
 
-        return view('calls', ['calls' => $calls]);
+        return view('calls', ['calls' => $calls, 'usuariosOnline' => $usuariosOnline]);
+    }
+
+    public function buscaUsuarioOnline() {
+        $usuariosOnline = User::where('status', 'Online')->get();
+
+        return $usuariosOnline;
     }
 
     public function destroy($id) {
