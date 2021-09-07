@@ -1,11 +1,11 @@
 # Install Dependencies 
 
-```sh
-$ [sudo] composer install
+```
+$  composer install
 ```
 
 # Feature
-Twilio's Voice API lets you make and manage calls programmatically.
+Twilio's Voice API.
 
 * Make and manage calls with the Voice API
 * Call Quality feedback.
