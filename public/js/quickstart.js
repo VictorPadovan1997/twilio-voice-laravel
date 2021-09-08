@@ -89,15 +89,6 @@
                             buttons: {
                                 "Accept": function() {
                                     conn.accept();
-                                    console.log('Aceito');
-                                    console.log(conn);
-                                    outboundCall = device.connect({
-                                        To: identity
-                                    });
-                                    outboundCall.on("accept", (connection) => {
-                                        console.log("The other person answered the phone!");
-                                    });
-                                    $( this ).dialog( "close" );
                                     atualizaStatusDaChamada(conn.parameters, conn.message, 'Accepted');
                                 },
                                 "Reject": function() {
@@ -142,7 +133,7 @@
                 duration : '0'
             },
             success : function(data){
-                console.log(data);
+
             },
             error : function(err){
                 console.log('Call nao atualizada!');
