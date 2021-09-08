@@ -69,7 +69,15 @@
             <span data-feather="plus-circle"></span>
           </a>
         </h6>
-        @include('layouts.usuariosOnline')
+        @if (isset($usuariosOnline))
+             <p>Nenhum usuario ativo.</p>
+             
+            <p>Para teste ao acessar com outro usuario em uma guia anonima 
+              atualizea pagina com F5 para mostrar ele Online não estou 
+              trabalhando com dados em RealTime para o projeto. </p>
+        @else
+          @include('layouts.usuariosOnline')
+        @endif
       </div>
     </nav>
 
