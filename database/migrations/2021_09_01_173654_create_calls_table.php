@@ -12,6 +12,7 @@ class CreateCallsTable extends Migration
      * @return void
      */
     public function up()
+
     {
         Schema::create('calls', function (Blueprint $table) {
             $table->id();
