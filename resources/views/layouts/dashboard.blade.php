@@ -69,15 +69,7 @@
             <span data-feather="plus-circle"></span>
           </a>
         </h6>
-        @if (isset($usuariosOnline))
-             <p>Nenhum usuario ativo.</p>
-             
-            <p>Para teste ao acessar com outro usuario em uma guia anonima 
-              atualizea pagina com F5 para mostrar ele Online não estou 
-              trabalhando com dados em RealTime para o projeto. </p>
-        @else
           @include('layouts.usuariosOnline')
-        @endif
       </div>
     </nav>
 
@@ -96,8 +88,36 @@
   </div>
 </div>
 
+<div id='modalMsgInicio' class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Aviso</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Para teste ao acessar com outro usuario em uma guia anonima
+                atualize a pagina com F5 para mostrar ele Online igualmente para chamadas
+                ao finalizar uma chamada atualize a pagina para listar na paginação os dados
+                não estou trabalhando com dados em RealTime para o projeto. </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">FECHAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <script src="{{ url('public/js/bootstrap/bootstrap.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" ></script>
     <script src="{{ url('public/js/bootstrap/dashboard.js') }}"></script>
+    <script type="text/javascript">
+        $(window).on('load', function() {
+           if(localStorage.getItem('mostradoModal') != 'true') {
+            localStorage.setItem('mostradoModal', 'true');
+            $('#modalMsgInicio').modal('show');
+           }
+        });
+    </script>
   </body>
 </html>
