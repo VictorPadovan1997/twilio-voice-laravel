@@ -1,4 +1,3 @@
-# Ricochet360 Dev Test
 ![](https://www.ricochet360.com/wp-content/uploads/2018/11/logo-ricochet360-sm.png.webp)
 
 
