@@ -1,5 +1,7 @@
 # Ricochet360 Dev Test
 ![](https://www.ricochet360.com/wp-content/uploads/2018/11/logo-ricochet360-sm.png.webp)
+
+
 Show us your expertise building a small web application.
 The goal of this application is to allow users to call each other.
 ### Requirements
