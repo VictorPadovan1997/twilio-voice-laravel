@@ -1,7 +1,6 @@
 ﻿$(function () {
     var ajaxURL = window.location.protocol+"//"+window.location.hostname+"/"+"twilio-voice-laravel/";
     console.log(ajaxURL);
-
     var speakerDevices = document.getElementById('speaker-devices');
     var ringtoneDevices = document.getElementById('ringtone-devices');
     var outputVolumeBar = document.getElementById('output-volume');
@@ -34,14 +33,15 @@
             });
 
             $.ajax({
-                url : ajaxURL+"token",
                 type : "post",
+                url : ajaxURL+"token",
+                headers: {   'Access-Control-Allow-Origin': '*' },
                 dataType : "json",
                 data : {
                    identity : identity
                 },
                 success : function(data){
-
+                    console.log(data.token);
                     Twilio.Device.setup(data.token);
 
                     Twilio.Device.ready(function (device) {
