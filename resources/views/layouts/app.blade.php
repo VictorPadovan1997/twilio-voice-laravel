@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="stylesheet" href="{{ url('public/css/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/bootstrap/bootstrap.min.css') }}">
 
     <title>{{ config('app.name', 'Prova Twilio') }}</title>
 
@@ -72,8 +72,8 @@
         </main>
     </div>
 
-    <script src="{{ url('public/js/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap/bootstrap.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" ></script>
-    <script src="{{ url('public/js/bootstrap/dashboard.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap/dashboard.js') }}"></script>
 </body>
 </html>

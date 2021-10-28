@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <title>Twilio Voice - Prova</title>
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="{{ url('public/css/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/bootstrap/bootstrap.min.css') }}">
     <meta name="theme-color" content="#7952b3">
 
     <style>
@@ -25,7 +25,7 @@
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="{{ url('public/css/bootstrap/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/bootstrap/dashboard.css') }}" rel="stylesheet">
   </head>
   <body>
 
@@ -98,7 +98,7 @@
         <div class="modal-body">
             <p>Para teste ao acessar com outro usuario em uma guia anonima
                 atualize a pagina com F5 para mostrar ele Online igualmente para chamadas
-                ao finalizar uma chamada atualize a pagina para listar na paginação os dados
+                ao finalizar uma chamada atualize a pagina para listar na paginação
                 não estou trabalhando com dados em RealTime para o projeto. </p>
         </div>
         <div class="modal-footer">
@@ -108,9 +108,9 @@
     </div>
   </div>
 
-    <script src="{{ url('public/js/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap/bootstrap.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" ></script>
-    <script src="{{ url('public/js/bootstrap/dashboard.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap/dashboard.js') }}"></script>
     <script type="text/javascript">
         $(window).on('load', function() {
            if(localStorage.getItem('mostradoModal') != 'true') {

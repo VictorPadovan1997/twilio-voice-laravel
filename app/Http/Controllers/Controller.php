@@ -23,7 +23,7 @@ class Controller extends BaseController
 		$twilioApiKey = env("TWILIO_API_KEY");
 		$twilioApiSecret = env("TWILIO_API_SECRET");
 		$outgoingApplicationSid = env("TWILIO_SID");
-
+        $setPushCredentialSid = env("TWILIO_CREDENCIAL_SID_ANDROID");
 
 		$identity = $data["identity"]; // Jack // Client name
 		$token = new AccessToken(
@@ -36,7 +36,8 @@ class Controller extends BaseController
 
 		$voiceGrant = new VoiceGrant();
 		$voiceGrant->setOutgoingApplicationSid($outgoingApplicationSid);
-		$voiceGrant->setIncomingAllow(true);
+        $voiceGrant->setPushCredentialSid($setPushCredentialSid);
+        $voiceGrant->setIncomingAllow(true);
 		$token->addGrant($voiceGrant);
 
 		return response()->json([
@@ -47,15 +48,12 @@ class Controller extends BaseController
     }
 
     public function voice(Request $request) {
-
     	$data = $request->all();
     	$response = new VoiceResponse();
-		$dial = $response->dial('', ['callerId' => $data["outgoing_caller_id"]]);
-		$client = $dial->client($request->To);
-		$client->parameter([
-            "name" => "outgoing_caller_id",
-            "value" => $data["outgoing_caller_id"],
-        ]);
+		$from = $data["From"];
+		$to = $data["To"];
+		$dial = $response->dial('', ['callerId' => $from]);
+		$client = $dial->client($to);
 
 		return $response;
 
