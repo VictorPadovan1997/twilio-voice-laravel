@@ -52,8 +52,10 @@ class Controller extends BaseController
     	$response = new VoiceResponse();
 		$from = $data["From"];
 		$to = $data["To"];
-		$dial = $response->dial('', ['callerId' => $from]);
+		$dial = $response->dial('', ['callerId' => $from, 'timeout'=> 60, 'timeLimit' => 60 * 10 ]);
 		$client = $dial->client($to);
+		$client->identity($to);
+
 
 		return $response;
 
