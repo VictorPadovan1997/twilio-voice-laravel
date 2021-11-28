@@ -1,6 +1,31 @@
-http://localhost/twilio-voice-laravel/token
+- GET TOKEN
 
-http://localhost/twilio-voice-laravel/voice
+Access this URL 'https://twiliovoiceapilaravel.herokuapp.com/token'
+
+- Method: **POST**
+
+passing in the body of your request the identity
+
+
+
+![stack Overflow](https://i.ibb.co/NSVwNRR/Captura-de-Tela-2021-11-28-a-s-07-56-10.png)
+
+ - VOICE
+
+include the request Voice in the twilio console responsible for calling the identifier.
+
+Access this URL 'https://twiliovoiceapilaravel.herokuapp.com/voice'
+
+- Method: **POST**
+
+passing in the body of your request the To and From
+
+![stack Overflow](https://i.ibb.co/VHGdn22/Captura-de-Tela-2021-11-28-a-s-08-01-04.png)
+
+
+
+
+Apis:
 
 ```
 public function token(Request $request) {
