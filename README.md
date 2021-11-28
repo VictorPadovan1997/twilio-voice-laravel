@@ -4,7 +4,7 @@ Access this URL 'https://twiliovoiceapilaravel.herokuapp.com/token'
 
 - Method: **POST**
 
-passing in the body of your request the identity
+passing in the body of your request the identity body: idenficador.
 
 
 
